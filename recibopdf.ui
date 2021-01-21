@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ReciboPDF</class>
+ <widget class="QMainWindow" name="ReciboPDF">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>547</width>
+    <height>193</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ReciboPDF</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="2" column="0">
+     <widget class="QLabel" name="labelMes">
+      <property name="text">
+       <string>Mês</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="labelNome">
+      <property name="text">
+       <string>Nome</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="2">
+     <widget class="QLabel" name="labelValor">
+      <property name="text">
+       <string>Valor</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="labelEndereco">
+      <property name="text">
+       <string>Endereço</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="3">
+     <widget class="QLineEdit" name="inputValor"/>
+    </item>
+    <item row="2" column="4">
+     <widget class="QPushButton" name="buttonGerar">
+      <property name="text">
+       <string>Gerar Recibo</string>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" colspan="4">
+     <widget class="QLineEdit" name="inputEndereco"/>
+    </item>
+    <item row="0" column="1" colspan="4">
+     <widget class="QComboBox" name="boxInquilinos">
+      <property name="editable">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="1">
+     <widget class="QComboBox" name="boxMeses">
+      <item>
+       <property name="text">
+        <string>Janeiro</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Fevereiro</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Março</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Abril</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Maio</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Junho</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Julho</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Agosto</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Setembro</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Outubro</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Novembro</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Dezembro</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>547</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuCarregar_Clientes">
+    <property name="title">
+     <string>Inquilinos</string>
+    </property>
+    <addaction name="actionCarregarInquilinos"/>
+    <addaction name="actionCriarInquilino"/>
+   </widget>
+   <addaction name="menuCarregar_Clientes"/>
+  </widget>
+  <action name="actionCarregarInquilinos">
+   <property name="text">
+    <string>Carregar Inquilinos</string>
+   </property>
+  </action>
+  <action name="actionCriarInquilino">
+   <property name="text">
+    <string>Novo Inquilino</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

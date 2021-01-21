@@ -1,0 +1,14 @@
+{
+    "inquilinos": [
+        {
+            "endereco": "Rua A, 365 - Extensao do Bosque, Rio das Ostras - RJ",
+            "nome": "joao",
+            "valor": 600
+        },
+        {
+            "endereco": "Rua B, 485 - Extensao do Bosque, Rio das Ostras - RJ",
+            "nome": "carlos",
+            "valor": 700
+        }
+    ]
+}
