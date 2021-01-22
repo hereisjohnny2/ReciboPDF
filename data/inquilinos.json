@@ -1,0 +1,29 @@
+{
+    "inquilinos": [
+        {
+            "endereco": "Rua A, 365 - Extensao do Bosque, Rio das Ostras - RJ",
+            "nome": "joao",
+            "valor": 600
+        },
+        {
+            "endereco": "Rua B, 485 - Extensao do Bosque, Rio das Ostras - RJ",
+            "nome": "carlos",
+            "valor": 700
+        },
+        {
+            "endereco": "Rua C, 3648 - Centro",
+            "nome": "julia",
+            "valor": 900
+        },
+        {
+            "endereco": "Rua d, 365 - Extensao do Bosque, Rio das Ostras - RJ",
+            "nome": "fransisco",
+            "valor": 900
+        },
+        {
+            "endereco": "Rua A, 365 - Extensao do Bosque, Rio das Ostras - RJ",
+            "nome": "Fabio",
+            "valor": 600
+        }
+    ]
+}

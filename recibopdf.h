@@ -4,7 +4,11 @@
 #include <QMainWindow>
 #include <QMap>
 #include <QFile>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <QDebug>
+
+#include <QObject>
 
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -16,8 +20,6 @@
 
 #include <QDate>
 #include <QLocale>
-
-#include "novoinquilinodialog.h"
 
 #include <memory>
 
@@ -35,7 +37,8 @@ public:
     ReciboPDF(QWidget *parent = nullptr);
     ~ReciboPDF();
 
-    static QString LerJson(QFile &arquivoJson);
+    QString LerJson(QFile &arquivoJson);
+    QString nomeArquivoJson = "data/inquilinos.json";
 
 private slots:
     void on_actionCarregarInquilinos_triggered();
@@ -44,11 +47,16 @@ private slots:
 
     void on_buttonGerar_clicked();
 
-    void on_actionCriarInquilino_triggered();
+    void on_buttonSalvar_clicked();
 
 private:
     Ui::ReciboPDF *ui;
     QMap<QString, std::shared_ptr<CInquilino>> inquilinos;
+    
     void CarregarInfoInquilino(std::shared_ptr<CInquilino> inquilino);
+    void CarregarInquilinos(QString& nomeArquivo);
+
+    QStringList GetDataAtual();
+    void GerarPDFdeJson(QString& html);
 };
 #endif // RECIBOPDF_H

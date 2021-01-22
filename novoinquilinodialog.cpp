@@ -19,8 +19,14 @@ void NovoInquilinoDialog::on_buttonBox_accepted()
 {
     QFile arquivo("data/inquilinos.json");
 
-    QJsonDocument jsonDocumento = QJsonDocument::fromJson(ReciboPDF::LerJson(arquivo).toUtf8());
+    QJsonDocument jsonDocumento = QJsonDocument::fromJson(ReciboPDF::LerJson(arquivo, this).toUtf8());
+    if (jsonDocumento.isEmpty())
+    {
+        return;
+    }
+
     QJsonObject jsonObj = jsonDocumento.object();
+
     QJsonArray inquilinosArray = jsonObj.value("inquilinos").toArray();
 
     QJsonObject inquilino;
@@ -31,11 +37,11 @@ void NovoInquilinoDialog::on_buttonBox_accepted()
     inquilinosArray.push_back(inquilino);
     jsonObj.insert("inquilinos", QJsonValue::fromVariant(inquilinosArray));
 
-    QJsonDocument jsonDocumentoSaida;
-    jsonDocumentoSaida.setObject(jsonObj);
+    // QJsonDocument jsonDocumentoSaida;
+    jsonDocumento.setObject(jsonObj);
 
     arquivo.open(QIODevice::ReadWrite | QIODevice::Text);
-    arquivo.write(jsonDocumentoSaida.toJson());
+    arquivo.write(jsonDocumento.toJson());
 
     arquivo.close();
 }
