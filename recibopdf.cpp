@@ -35,14 +35,18 @@ void ReciboPDF::on_actionCarregarInquilinos_triggered()
 
     QJsonDocument jsonDocumento = QJsonDocument::fromJson(ReciboPDF::LerJson(arquivo).toUtf8());
     QJsonObject jsonObj = jsonDocumento.object();
-    QJsonArray inquilinosArray = jsonObj.value("inquilinos").toArray();
+    QJsonArray inquilinosArray = jsonObj.value("INQUILINOS").toArray();
 
     inquilinos.clear();
 
     for (auto inquilino : inquilinosArray) {
-        auto nome = inquilino.toObject().value("nome").toString();
-        auto endereco = inquilino.toObject().value("endereco").toString();
-        auto valorAluguel = inquilino.toObject().value("valor").toDouble();
+        auto nome = inquilino.toObject().value("NOME CONTRATO").toString();
+        auto endereco = inquilino.toObject().value("ENDEREÇO COMPLETO").toString();
+        auto complemento = inquilino.toObject().value("COMPLEMENTO").toString();
+        auto cidade = inquilino.toObject().value("CIDADE").toString();
+        auto valorAluguel = inquilino.toObject().value("VALOR").toDouble();
+
+        endereco = endereco + " - " + complemento + " - " + cidade;
         inquilinos[nome] = std::make_shared<CInquilino>(nome, endereco, valorAluguel);
 
         ui->boxInquilinos->addItem(nome);
