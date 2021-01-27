@@ -99,9 +99,7 @@ void ReciboPDF::on_buttonGerar_clicked()
                 "Crissima Cardoso Carvalho"
             "</div>"
             "<br>"
-            "<br>"
             "<hr>"
-            "<br>"
             "<br>"
             "<p align=center>"
                 "<img src='assets/imagens/logo.jpg' width='621'>"
@@ -140,6 +138,8 @@ void ReciboPDF::on_buttonGerar_clicked()
     printer.setPageMargins(QMarginsF(15,15,15,15));
 
     documento.print(&printer);
+
+    QMessageBox::information(this, "ReciboPDF", "Arquivo PDF criado");
 }
 
 void ReciboPDF::on_actionCriarInquilino_triggered()

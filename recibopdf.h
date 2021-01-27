@@ -17,6 +17,8 @@
 #include <QDate>
 #include <QLocale>
 
+#include <QMessageBox>
+
 #include "novoinquilinodialog.h"
 
 #include <memory>

@@ -21,15 +21,17 @@ void NovoInquilinoDialog::on_buttonBox_accepted()
 
     QJsonDocument jsonDocumento = QJsonDocument::fromJson(ReciboPDF::LerJson(arquivo).toUtf8());
     QJsonObject jsonObj = jsonDocumento.object();
-    QJsonArray inquilinosArray = jsonObj.value("inquilinos").toArray();
+    QJsonArray inquilinosArray = jsonObj.value("INQUILINOS").toArray();
 
     QJsonObject inquilino;
-    inquilino.insert("nome", QJsonValue::fromVariant(ui->inputNome->text()));
-    inquilino.insert("endereco", QJsonValue::fromVariant(ui->inputEndereco->text()));
-    inquilino.insert("valor", QJsonValue::fromVariant(ui->inputAluguel->text().toDouble()));
+    inquilino.insert("NOME CONTRATO", QJsonValue::fromVariant(ui->inputNome->text()));
+    inquilino.insert("ENDEREÇO COMPLETO", QJsonValue::fromVariant(ui->inputEndereco->text()));
+    inquilino.insert("COMPLEMENTO", QJsonValue::fromVariant(""));
+    inquilino.insert("CIDADE", QJsonValue::fromVariant(""));
+    inquilino.insert("VALOR", QJsonValue::fromVariant(ui->inputAluguel->text().toDouble()));
 
     inquilinosArray.push_back(inquilino);
-    jsonObj.insert("inquilinos", QJsonValue::fromVariant(inquilinosArray));
+    jsonObj.insert("INQUILINOS", QJsonValue::fromVariant(inquilinosArray));
 
     QJsonDocument jsonDocumentoSaida;
     jsonDocumentoSaida.setObject(jsonObj);
