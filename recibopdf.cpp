@@ -2,8 +2,7 @@
 #include "ui_recibopdf.h"
 
 ReciboPDF::ReciboPDF(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::ReciboPDF)
+    : QMainWindow(parent), ui(new Ui::ReciboPDF)
 {
     ui->setupUi(this);
 }
@@ -28,7 +27,6 @@ void ReciboPDF::CarregarInfoInquilino(std::shared_ptr<CInquilino> inquilino)
     ui->inputValor->setText(QString::number(inquilino->ValorAluguel(), 'g', 6));
 }
 
-
 void ReciboPDF::on_actionCarregarInquilinos_triggered()
 {
     QFile arquivo("data/inquilinos.json");
@@ -39,15 +37,17 @@ void ReciboPDF::on_actionCarregarInquilinos_triggered()
 
     inquilinos.clear();
 
-    for (auto inquilino : inquilinosArray) {
+    for (auto inquilino : inquilinosArray)
+    {
         auto nome = inquilino.toObject().value("NOME CONTRATO").toString();
         auto endereco = inquilino.toObject().value("ENDEREÇO COMPLETO").toString();
         auto complemento = inquilino.toObject().value("COMPLEMENTO").toString();
         auto cidade = inquilino.toObject().value("CIDADE").toString();
         auto valorAluguel = inquilino.toObject().value("VALOR").toDouble();
+        auto valorIptu = inquilino.toObject().value("VALOR IPTU").toDouble();
 
         endereco = endereco + " - " + complemento + " - " + cidade;
-        inquilinos[nome] = std::make_shared<CInquilino>(nome, endereco, valorAluguel);
+        inquilinos[nome] = std::make_shared<CInquilino>(nome, endereco, valorAluguel, valorIptu);
 
         ui->boxInquilinos->addItem(nome);
     }
@@ -63,7 +63,6 @@ void ReciboPDF::on_buttonGerar_clicked()
 {
     QString nome = ui->boxInquilinos->currentText();
     QString endereco = inquilinos[nome]->Endereco();
-    QString valor = QString::number(inquilinos[nome]->ValorAluguel());
     QString mesRecibo = ui->boxMeses->currentText();
 
     auto data = QDate::currentDate();
@@ -72,7 +71,46 @@ void ReciboPDF::on_buttonGerar_clicked()
             mes = data.longMonthName(data.month()),
             ano = QString::number(data.year());
 
-    QString html =
+    QString valor = "";
+    QString html = "";
+    if (ui->boxAluguel->currentText() == "Aluguel")
+    {
+        valor = QString::number(inquilinos[nome]->ValorAluguel());
+        html =
+            "<p align=center>"
+            "<img src='assets/imagens/logo.jpg' width='621'>"
+            "</p>"
+            "<br>"
+            "<h2 align=center>RECIBO DE ALUGUEL DE IMÓVEL RESIDENCIAL</h2>"
+            "<br>"
+            "<p align=justify>"
+            "Recebi de "
+            "<b>" +
+            nome + "</b>"
+                   ", a importância de R$"
+                   "<b>" +
+            valor + "</b>"
+                    ", em dinheiro, referente ao pagamento de sua mensalidade locatícia do mês de "
+                    "<b>" +
+            mesRecibo + "</b>"
+                        ", relativo ao imóvel localizado na "
+                        "<b>" +
+            endereco + "</b>"
+                       "."
+                       "</p>"
+                       "<div align=right>"
+                       "Rio das Ostras, " +
+            dia + " de " + mes + " de " + ano +
+            "<p align=right>"
+            "<img src='assets/imagens/assinatura.png' height='40'>"
+            "</p>"
+            "JMC"
+            "</div>";
+    }
+    else if (ui->boxAluguel->currentText() == "IPTU")
+    {
+        valor = QString::number(inquilinos[nome]->ValorIptu());
+        html =
             "<p align=center>"
                 "<img src='assets/imagens/logo.jpg' width='621'>"
             "</p>"
@@ -84,49 +122,19 @@ void ReciboPDF::on_buttonGerar_clicked()
                 "<b>" + nome + "</b>"
                 ", a importância de R$"
                 "<b>" + valor + "</b>"
-                ", em dinheiro, referente ao pagamento de sua mensalidade locatícia do mês de "
-                "<b>" + mesRecibo + "</b>"
-                ", relativo ao imóvel localizado na "
+                ", em dinheiro, referente ao pagamento do IPTU do ano de 2021, relativo ao imóvel localizado na "
                 "<b>" + endereco + "</b>"
                 "."
             "</p>"
             "<div align=right>"
-                "Rio das Ostras, "
-                + dia + " de " + mes + " de " + ano +
+                "Rio das Ostras, " +
+                dia + " de " + mes + " de " + ano +
                 "<p align=right>"
                     "<img src='assets/imagens/assinatura.png' height='40'>"
                 "</p>"
-                "Crissima Cardoso Carvalho"
-            "</div>"
-            "<br>"
-            "<hr>"
-            "<br>"
-            "<p align=center>"
-                "<img src='assets/imagens/logo.jpg' width='621'>"
-            "</p>"
-            "<br>"
-            "<h2 align=center>RECIBO DE ALUGUEL DE IMÓVEL RESIDENCIAL</h2>"
-            "<br>"
-            "<p align=justify>"
-                "Recebi de "
-                "<b>" + nome + "</b>"
-                ", a importância de R$"
-                "<b>" + valor + "</b>"
-                ", em dinheiro, referente ao pagamento de sua mensalidade locatícia do mês de "
-                "<b>" + mesRecibo + "</b>"
-                ", relativo ao imóvel localizado na "
-                "<b>" + endereco + "</b>"
-                "."
-            "</p>"
-            "<div align=right>"
-                "Rio das Ostras, "
-                + dia + " de " + mes + " de " + ano +
-                "<p align=right>"
-                    "<img src='assets/imagens/assinatura.png' height='40'>"
-                "</p>"
-                "Crissima Cardoso Carvalho"
-            "</div>"
-            ;
+            "   JMC"
+            "</div>";
+    }
 
     QTextDocument documento;
     documento.setHtml(html);
@@ -135,7 +143,7 @@ void ReciboPDF::on_buttonGerar_clicked()
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
     printer.setOutputFileName(nome + "_recibo.pdf");
-    printer.setPageMargins(QMarginsF(15,15,15,15));
+    printer.setPageMargins(QMarginsF(15, 15, 15, 15));
 
     documento.print(&printer);
 
