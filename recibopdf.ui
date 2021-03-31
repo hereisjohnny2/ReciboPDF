@@ -15,24 +15,10 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="2" column="2">
-     <widget class="QLabel" name="labelValor">
+    <item row="3" column="0">
+     <widget class="QLabel" name="labelMes">
       <property name="text">
-       <string>Valor</string>
-      </property>
-     </widget>
-    </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="labelEndereco">
-      <property name="text">
-       <string>Endereço</string>
-      </property>
-     </widget>
-    </item>
-    <item row="0" column="1" colspan="5">
-     <widget class="QComboBox" name="boxInquilinos">
-      <property name="editable">
-       <bool>true</bool>
+       <string>Mês</string>
       </property>
      </widget>
     </item>
@@ -43,21 +29,61 @@
       </property>
      </widget>
     </item>
-    <item row="2" column="5">
+    <item row="3" column="4">
+     <widget class="QComboBox" name="boxAluguel">
+      <item>
+       <property name="text">
+        <string>Aluguel</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>IPTU</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item row="0" column="1" colspan="5">
+     <widget class="QComboBox" name="boxInquilinos">
+      <property name="inputMethodHints">
+       <set>Qt::ImhSensitiveData</set>
+      </property>
+      <property name="editable">
+       <bool>true</bool>
+      </property>
+      <property name="insertPolicy">
+       <enum>QComboBox::InsertAlphabetically</enum>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="5">
      <widget class="QPushButton" name="buttonGerar">
       <property name="text">
        <string>Gerar Recibo</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QLabel" name="labelMes">
+    <item row="1" column="0">
+     <widget class="QLabel" name="labelEndereco">
       <property name="text">
-       <string>Mês</string>
+       <string>Endereço</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="1">
+    <item row="1" column="1" colspan="5">
+     <widget class="QLineEdit" name="inputEndereco"/>
+    </item>
+    <item row="3" column="2">
+     <widget class="QLabel" name="labelValor">
+      <property name="text">
+       <string>Valor</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="3">
+     <widget class="QLineEdit" name="inputValor"/>
+    </item>
+    <item row="3" column="1">
      <widget class="QComboBox" name="boxMeses">
       <item>
        <property name="text">
@@ -121,26 +147,6 @@
       </item>
      </widget>
     </item>
-    <item row="1" column="1" colspan="5">
-     <widget class="QLineEdit" name="inputEndereco"/>
-    </item>
-    <item row="2" column="3">
-     <widget class="QLineEdit" name="inputValor"/>
-    </item>
-    <item row="2" column="4">
-     <widget class="QComboBox" name="boxAluguel">
-      <item>
-       <property name="text">
-        <string>Aluguel</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>IPTU</string>
-       </property>
-      </item>
-     </widget>
-    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -149,7 +155,7 @@
      <x>0</x>
      <y>0</y>
      <width>547</width>
-     <height>22</height>
+     <height>20</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuCarregar_Clientes">

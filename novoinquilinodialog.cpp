@@ -26,8 +26,8 @@ void NovoInquilinoDialog::on_buttonBox_accepted()
     QJsonObject inquilino;
     inquilino.insert("NOME CONTRATO", QJsonValue::fromVariant(ui->inputNome->text()));
     inquilino.insert("ENDEREÇO COMPLETO", QJsonValue::fromVariant(ui->inputEndereco->text()));
-    inquilino.insert("COMPLEMENTO", QJsonValue::fromVariant(""));
-    inquilino.insert("CIDADE", QJsonValue::fromVariant(""));
+    inquilino.insert("COMPLEMENTO", QJsonValue::fromVariant(ui->inputComp->text()));
+    inquilino.insert("CIDADE", QJsonValue::fromVariant(ui->inputCity->text()));
     inquilino.insert("VALOR", QJsonValue::fromVariant(ui->inputAluguel->text().toDouble()));
 
     inquilinosArray.push_back(inquilino);

@@ -1,6 +1,10 @@
 #include "recibopdf.h"
 #include "ui_recibopdf.h"
 
+#include <QFileDialog>
+#include <QDesktopServices>
+#include <QSignalBlocker>
+
 ReciboPDF::ReciboPDF(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::ReciboPDF)
 {
@@ -23,13 +27,25 @@ QString ReciboPDF::LerJson(QFile &arquivoJson)
 
 void ReciboPDF::CarregarInfoInquilino(std::shared_ptr<CInquilino> inquilino)
 {
+    QString endereco = inquilino->Endereco() + " - " + inquilino->Complemento() + " - " + inquilino->Cidade();
     ui->inputEndereco->setText(inquilino->Endereco());
     ui->inputValor->setText(QString::number(inquilino->ValorAluguel(), 'g', 6));
 }
 
 void ReciboPDF::on_actionCarregarInquilinos_triggered()
 {
+
+    QSignalBlocker blockComboBox(ui->boxInquilinos);
+
     QFile arquivo("data/inquilinos.json");
+//    QString arquivoNome = QFileDialog::getOpenFileName(this, "Open the file");
+
+//    QFile arquivo(arquivoNome);
+//    if (!arquivo.open(QIODevice::ReadOnly | QFile::Text))
+//    {
+//        QMessageBox::warning(this, "Warning", "Can not open the file : " + arquivo.errorString());
+//        return;
+//    }
 
     QJsonDocument jsonDocumento = QJsonDocument::fromJson(ReciboPDF::LerJson(arquivo).toUtf8());
     QJsonObject jsonObj = jsonDocumento.object();
@@ -46,11 +62,12 @@ void ReciboPDF::on_actionCarregarInquilinos_triggered()
         auto valorAluguel = inquilino.toObject().value("VALOR").toDouble();
         auto valorIptu = inquilino.toObject().value("VALOR IPTU").toDouble();
 
-        endereco = endereco + " - " + complemento + " - " + cidade;
-        inquilinos[nome] = std::make_shared<CInquilino>(nome, endereco, valorAluguel, valorIptu);
+        inquilinos[nome] = std::make_shared<CInquilino>(nome, endereco, complemento, cidade, valorAluguel, valorIptu);
+
 
         ui->boxInquilinos->addItem(nome);
     }
+
     CarregarInfoInquilino(inquilinos[ui->boxInquilinos->currentText()]);
 }
 
@@ -62,7 +79,7 @@ void ReciboPDF::on_boxInquilinos_currentIndexChanged(const QString &nome)
 void ReciboPDF::on_buttonGerar_clicked()
 {
     QString nome = ui->boxInquilinos->currentText();
-    QString endereco = inquilinos[nome]->Endereco();
+    QString endereco = inquilinos[nome]->Endereco() + " - " + inquilinos[nome]->Complemento() + " - " + inquilinos[nome]->Cidade();
     QString mesRecibo = ui->boxMeses->currentText();
 
     auto data = QDate::currentDate();
@@ -142,12 +159,13 @@ void ReciboPDF::on_buttonGerar_clicked()
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setPaperSize(QPrinter::A4);
-    printer.setOutputFileName(nome + "_recibo.pdf");
+    printer.setOutputFileName( "Recibo - " + nome +" - " + mesRecibo + ".pdf");
     printer.setPageMargins(QMarginsF(15, 15, 15, 15));
 
     documento.print(&printer);
 
     QMessageBox::information(this, "ReciboPDF", "Arquivo PDF criado");
+    QDesktopServices::openUrl(QUrl::fromLocalFile(QDir::currentPath()));
 }
 
 void ReciboPDF::on_actionCriarInquilino_triggered()
