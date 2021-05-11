@@ -92,7 +92,8 @@ void ReciboPDF::on_buttonGerar_clicked()
     QString html = "";
     if (ui->boxAluguel->currentText() == "Aluguel")
     {
-        valor = QString::number(inquilinos[nome]->ValorAluguel());
+        // valor = QString::number(inquilinos[nome]->ValorAluguel());
+        valor = ui->inputValor->text();
         html =
             "<p align=center>"
             "<img src='assets/imagens/logo.jpg' width='621'>"
