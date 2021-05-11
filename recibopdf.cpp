@@ -88,12 +88,11 @@ void ReciboPDF::on_buttonGerar_clicked()
             mes = data.longMonthName(data.month()),
             ano = QString::number(data.year());
 
-    QString valor = "";
+    QString valor = ui->inputValor->text();;
     QString html = "";
     if (ui->boxAluguel->currentText() == "Aluguel")
     {
         // valor = QString::number(inquilinos[nome]->ValorAluguel());
-        valor = ui->inputValor->text();
         html =
             "<p align=center>"
             "<img src='assets/imagens/logo.jpg' width='621'>"
@@ -127,7 +126,6 @@ void ReciboPDF::on_buttonGerar_clicked()
     }
     else if (ui->boxAluguel->currentText() == "IPTU")
     {
-        valor = QString::number(inquilinos[nome]->ValorIptu());
         html =
             "<p align=center>"
                 "<img src='assets/imagens/logo.jpg' width='621'>"
