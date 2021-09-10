@@ -9,19 +9,23 @@ CONFIG += c++17
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    cinquilino.cpp \
-    main.cpp \
-    novoinquilinodialog.cpp \
-    recibopdf.cpp
+    ../src/cinquilino.cpp \
+    ../src/main.cpp \
+    ../src/novoinquilinodialog.cpp \
+    ../src/recibopdf.cpp
 
 HEADERS += \
-    cinquilino.h \
-    novoinquilinodialog.h \
-    recibopdf.h
+    ../src/cinquilino.h \
+    ../src/novoinquilinodialog.h \
+    ../src/recibopdf.h
 
 FORMS += \
-    novoinquilinodialog.ui \
-    recibopdf.ui
+    ../src/novoinquilinodialog.ui \
+    ../src/recibopdf.ui
 
 DISTFILES += \
-    inquilinos.json
+    ../data/inquilinos.json
+
+DESTDIR = ./
+
+OBJECTS_DIR = objects

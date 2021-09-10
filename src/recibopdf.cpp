@@ -37,15 +37,15 @@ void ReciboPDF::on_actionCarregarInquilinos_triggered()
 
     QSignalBlocker blockComboBox(ui->boxInquilinos);
 
-    QFile arquivo("data/inquilinos.json");
-//    QString arquivoNome = QFileDialog::getOpenFileName(this, "Open the file");
+    // QFile arquivo("data/inquilinos.json");
+    QString arquivoNome = QFileDialog::getOpenFileName(this, "Open the file");
 
-//    QFile arquivo(arquivoNome);
-//    if (!arquivo.open(QIODevice::ReadOnly | QFile::Text))
-//    {
-//        QMessageBox::warning(this, "Warning", "Can not open the file : " + arquivo.errorString());
-//        return;
-//    }
+    QFile arquivo(arquivoNome);
+    if (!arquivo.open(QIODevice::ReadOnly | QFile::Text))
+    {
+        QMessageBox::warning(this, "Warning", "Can not open the file : " + arquivo.errorString());
+        return;
+    }
 
     QJsonDocument jsonDocumento = QJsonDocument::fromJson(ReciboPDF::LerJson(arquivo).toUtf8());
     QJsonObject jsonObj = jsonDocumento.object();
